@@ -19,7 +19,6 @@ async function init() {
     themeMode: "dark"
   });
 
-  // THIS IS WHAT OPENS THE MODAL
   provider.on("display_uri", (uri) => {
     modal.openModal({ uri });
   });
