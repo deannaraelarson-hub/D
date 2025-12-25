@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WalletConnect</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div class="card">
+    <div class="logo">W3</div>
+
+    <h1>Connect Wallet</h1>
+    <p class="subtitle">Secure Web3 Authentication</p>
+
+    <button id="connectBtn">
+      <span class="btn-text">Connect Wallet</span>
+      <span class="btn-loader"></span>
+    </button>
+
+    <div id="success" class="success hidden">
+      <div class="check">✓</div>
+      <div class="success-text">Wallet Connected</div>
+    </div>
+
+    <pre id="address"></pre>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
