@@ -5,7 +5,7 @@ const projectId = "962425907914a3e80a7d8e7288b23f62";
 
 let provider;
 let modal;
-let isInitialized = false;
+let ready = false;
 
 async function init() {
   provider = await EthereumProvider.init({
@@ -34,30 +34,22 @@ async function init() {
       method: "eth_accounts"
     });
 
-    document.getElementById("status").textContent =
-      "✓ Wallet connected successfully";
-
     document.getElementById("address").textContent =
       "Connected Address:\n" + accounts[0];
+
+    document.getElementById("status").textContent =
+      "Wallet connected successfully";
 
     modal.closeModal();
   });
 
-  isInitialized = true;
+  // 🔑 THIS IS THE FIX
+  ready = true;
 }
 
-await init();
-
 document.getElementById("connectBtn").addEventListener("click", async () => {
-  if (!isInitialized) return;
-
-  // 🔐 SAFETY: ensure modal always opens
-  modal.openModal();
-
-  try {
-    await provider.connect();
-  } catch (err) {
-    console.error("Connection failed:", err);
-    modal.closeModal();
-  }
+  if (!ready) return; // prevents race condition
+  await provider.connect();
 });
+
+await init();
