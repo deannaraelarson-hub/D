@@ -25,7 +25,6 @@ async function init() {
     }
   });
 
-  // 🔑 REQUIRED FOR MODAL TO OPEN
   provider.on("display_uri", (uri) => {
     modal.openModal({ uri });
   });
@@ -37,9 +36,12 @@ async function init() {
       method: "eth_accounts"
     });
 
-    document.getElementById("address").textContent = accounts[0];
-    document.querySelector(".btn-text").textContent = "Connected";
+    document.getElementById("address").textContent =
+      accounts[0];
+
     document.getElementById("connectBtn").classList.add("connected");
+    document.querySelector(".btn-text").textContent = "Connected";
+
     document.getElementById("success").classList.remove("hidden");
 
     modal.closeModal();
@@ -48,12 +50,7 @@ async function init() {
 
 document.getElementById("connectBtn").addEventListener("click", async () => {
   if (isConnected) return;
-
-  // 🔥 THIS LINE IS WHY IT WORKS
-  await provider.disconnect().catch(() => {});
-
   document.getElementById("connectBtn").classList.add("loading");
-
   await provider.connect();
 });
 
