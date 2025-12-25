@@ -11,6 +11,26 @@ const appKit = createAppKit({
       id: 1,
       name: "Ethereum",
       rpcUrl: "https://cloudflare-eth.com"
+    },
+    {
+      id: 56,
+      name: "Binance Smart Chain",
+      rpcUrl: "https://bsc-mainnet.chainstack.com/rpc/56"
+    },
+    {
+      id: 137,
+      name: "Polygon Mainnet",
+      rpcUrl: "https://polygon-mainnet.chainstack.com/rpc/137"
+    },
+    {
+      id: 42161,
+      name: "Arbitrum One",
+      rpcUrl: "https://arbitrum-mainnet.chainstack.com/rpc/42161"
+    },
+    {
+      id: 43114,
+      name: "Avalanche Mainnet",
+      rpcUrl: "https://avalanche-mainnet.chainstack.com/rpc/43114"
     }
   ],
   metadata: {
