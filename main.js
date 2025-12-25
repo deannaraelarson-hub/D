@@ -5,7 +5,7 @@ const projectId = "962425907914a3e80a7d8e7288b23f62";
 
 let provider;
 let modal;
-let ready = false;
+let isConnected = false;
 
 async function init() {
   provider = await EthereumProvider.init({
@@ -21,34 +21,39 @@ async function init() {
     themeVariables: {
       "--w3m-accent-color": "#6366f1",
       "--w3m-background-color": "#020617",
-      "--w3m-border-radius-master": "14px"
+      "--w3m-border-radius-master": "18px"
     }
   });
 
+  // 🔑 REQUIRED FOR MODAL TO OPEN
   provider.on("display_uri", (uri) => {
     modal.openModal({ uri });
   });
 
   provider.on("connect", async () => {
+    isConnected = true;
+
     const accounts = await provider.request({
       method: "eth_accounts"
     });
 
-    document.getElementById("address").textContent =
-      "Connected Address:\n" + accounts[0];
-
-    document.getElementById("status").textContent =
-      "Wallet connected successfully";
+    document.getElementById("address").textContent = accounts[0];
+    document.querySelector(".btn-text").textContent = "Connected";
+    document.getElementById("connectBtn").classList.add("connected");
+    document.getElementById("success").classList.remove("hidden");
 
     modal.closeModal();
   });
-
-  // 🔑 THIS IS THE FIX
-  ready = true;
 }
 
 document.getElementById("connectBtn").addEventListener("click", async () => {
-  if (!ready) return; // prevents race condition
+  if (isConnected) return;
+
+  // 🔥 THIS LINE IS WHY IT WORKS
+  await provider.disconnect().catch(() => {});
+
+  document.getElementById("connectBtn").classList.add("loading");
+
   await provider.connect();
 });
 
